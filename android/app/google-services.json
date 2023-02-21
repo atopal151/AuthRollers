@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "60287710599",
+    "project_id": "auth-role-ef0e8",
+    "storage_bucket": "auth-role-ef0e8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60287710599:android:606fe842d175130f5dcf22",
+        "android_client_info": {
+          "package_name": "com.authrollers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "60287710599-j4vkpiid6svqmmt4apvtrs18hs7bpd8l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.authrollers",
+            "certificate_hash": "29c9e71443cf96d93bfec5b6cee4693ec638adf7"
+          }
+        },
+        {
+          "client_id": "60287710599-g1sg11gggi2qv382vc8mt3663r09orj1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6MvTm072nl0HcZW96MHq07y-yKx070i0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "60287710599-g1sg11gggi2qv382vc8mt3663r09orj1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
