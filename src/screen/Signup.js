@@ -25,7 +25,6 @@ export default class Signup extends Component {
     }
 
     componentDidMount() {
-
         if (this.state.userid !== '') {
             this.state.userid = auth().currentUser.uid
             console.log(this.state.userid);
@@ -42,7 +41,6 @@ export default class Signup extends Component {
                         <View style={styles.backBird}>
                             <Image style={styles.birdStyle}
                                 source={require("../../assets/bird.png")} />
-
                         </View>
                         <View>
                             <Heading size="xl" fontWeight="600" color="#ff6060" _dark={{
@@ -52,9 +50,6 @@ export default class Signup extends Component {
                             </Heading>
                         </View>
                         <Box safeArea p="2" w="90%" maxW="290" py="8">
-
-
-
                             <Heading mt="1" _dark={{
                                 color: "warmGray.200"
                             }} color="coolGray.600" fontWeight="medium" size="xs">
@@ -130,20 +125,18 @@ export default class Signup extends Component {
                                                     address: this.state.address,
                                                     role: this.state.selectRole
                                                 })
-                                                console.log('User account created & signed in!');
+                                                Alert.alert("'User account created", ` Let's Signin `)
+                                                this.props.navigation.navigate('Signin')
                                             })
                                             .catch(error => {
                                                 if (error.code === 'auth/email-already-in-use') {
                                                     console.log('That email address is already in use!');
                                                 }
-
                                                 if (error.code === 'auth/invalid-email') {
                                                     console.log('That email address is invalid!');
                                                 }
-
                                                 console.error(error);
                                             });
-                                        //this.props.navigation.navigate("studentstackscreen")
                                     }} >
                                     Sign up
                                 </Button>

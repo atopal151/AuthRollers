@@ -18,13 +18,12 @@ export default class Signin extends Component {
             userid: '',
             role: '',
             name: '',
+            address: '',
             user: [],
         }
     }
 
     componentDidMount() {
-
-
         if (auth().currentUser !== null) {
             this.state.userid = auth().currentUser.uid
             console.log(this.state.userid);
@@ -42,21 +41,30 @@ export default class Signin extends Component {
                     this.state.user.map((users) => {
                         this.state.name = users.name
                         this.state.role = users.role
+                        this.state.email = users.email
+                        this.state.address = users.address
                         console.log(this.state.role);
                     })
-                    Alert.alert("There is a logged in user", ` UID : ${this.state.userid} 
-                    ${this.state.name} ${this.state.role}`)
+
                     if (this.state.role === 'teacher') {
-                        console.log("User Teacher");
-                        this.props.navigation.navigate("teacherstackscreen")
+                        console.log("User Teacher" + this.state.name);
+                        this.props.navigation.navigate("teacherstackscreen", {
+                            surname: this.state.name,
+                            rolles: this.state.role,
+                            mail: this.state.email,
+                            userAddress: this.state.address
+                        })
                     } else if (this.state.role === 'student') {
                         console.log("User Student");
-
-                        this.props.navigation.navigate("studentstackscreen")
+                        this.props.navigation.navigate("studentstackscreen", {
+                            surname: this.state.name,
+                            rolles: this.state.role,
+                            mail: this.state.email,
+                            userAddress: this.state.address
+                        })
                     }
                 });
         } else {
-
             Alert.alert("No logged out users found.", "Please Signin or Signup")
         }
     }
@@ -133,17 +141,28 @@ export default class Signin extends Component {
                                                         this.state.user.map((users) => {
                                                             this.state.name = users.name
                                                             this.state.role = users.role
+                                                            this.state.email = users.email
+                                                            this.state.address = users.address
                                                             console.log(this.state.role);
                                                         })
-                                                        Alert.alert("There is a logged in user", ` UID : ${this.state.userid} 
-                                                    ${this.state.name} ${this.state.role}`)
+
                                                         if (this.state.role === 'teacher') {
                                                             console.log("User Teacher");
-                                                            this.props.navigation.navigate("teacherstackscreen")
+                                                            this.props.navigation.navigate("teacherstackscreen", {
+                                                                surname: this.state.name,
+                                                                rolles: this.state.role,
+                                                                mail: this.state.email,
+                                                                userAddress: this.state.address
+                                                            })
                                                         } else if (this.state.role === 'student') {
                                                             console.log("User Student");
 
-                                                            this.props.navigation.navigate("studentstackscreen")
+                                                            this.props.navigation.navigate("studentstackscreen", {
+                                                                surname: this.state.name,
+                                                                rolles: this.state.role,
+                                                                mail: this.state.email,
+                                                                userAddress: this.state.address
+                                                            })
                                                         }
                                                     });
 

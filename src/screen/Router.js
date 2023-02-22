@@ -51,10 +51,10 @@ export default class Router extends Component {
                         name="Signup" component={Signup}
                         options={{ headerShown: false }} />
                     <Drawer.Screen name="studentstackscreen"
-                        component={StudentStackScreen}
+                        component={StudentScreen}
                         options={{ headerShown: false }} />
                     <Drawer.Screen name="teacherstackscreen"
-                        component={TeacherStackScreen}
+                        component={TeacherScreen}
                         options={{ headerShown: false }} />
                 </Drawer.Navigator>
             </NavigationContainer>
