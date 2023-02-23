@@ -1,14 +1,35 @@
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, Image, View, Alert } from 'react-native';
+import { StyleSheet, ScrollView, Image, View, Alert, TouchableOpacity,ToastAndroid } from 'react-native';
 import {
     NativeBaseProvider, Center,
     Heading, VStack, FormControl,
-    Input, Button, Box, Select, CheckIcon,
-    WarningIcon, WarningOutlineIcon,
-    Text, TextArea, Link, HStack
+    Input, Button, Box, Select, CheckIcon, WarningOutlineIcon,
+    Text, TextArea, Link, HStack, useToast
 } from 'native-base';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import Toast from 'react-native-toast-message';
+
+
+GoogleSignin.configure({
+    webClientId: '60287710599-g1sg11gggi2qv382vc8mt3663r09orj1.apps.googleusercontent.com',
+});
+
+
+
+
+async function onGoogleButtonPress() {
+    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+    const { idToken } = await GoogleSignin.signIn();
+
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+    return auth().signInWithCredential(googleCredential);
+}
+
+
+
 
 export default class Signup extends Component {
 
@@ -24,16 +45,26 @@ export default class Signup extends Component {
         }
     }
 
+    
     componentDidMount() {
+         
         if (this.state.userid !== '') {
             this.state.userid = auth().currentUser.uid
             console.log(this.state.userid);
-            Alert.alert("There is a logged in user", ` UID : ${this.state.userid} `)
+            ToastAndroid.showWithGravityAndOffset(
+                'No logged out users found.',
+                ToastAndroid.LONG,
+                ToastAndroid.BOTTOM,
+                25,
+                50,
+              );
+           //Alert.alert("There is a logged in user", ` UID : ${this.state.userid} `)
         } else {
 
         }
     }
     render() {
+
         return (
             <ScrollView>
                 <NativeBaseProvider>
@@ -156,6 +187,36 @@ export default class Signup extends Component {
                                         Sign In
                                     </Link>
                                 </HStack>
+                                <View style={styles.imageStyle}>
+                                    <TouchableOpacity onPress={() => {
+                                        if (this.state.selectRole === "" && this.state.address === "") {
+                                            Alert.alert("Dikkat!", "Lütfen Bir rol seçin ve Adres Bilgilerini Girin")
+                                        } else if (this.state.selectRole !== "" && this.state.address !== "") {
+                                            console.log(this.state.selectRole);
+                                            onGoogleButtonPress().then(() => {
+                                                firestore().collection('Users').add({
+                                                    uid: auth().currentUser.uid,
+                                                    email: auth().currentUser.email,
+                                                    name: auth().currentUser.displayName,
+                                                    address: this.state.address,
+                                                    role: this.state.selectRole
+                                                }).then(() => {
+                                                    console.log("Google data set");
+                                                })
+                                            })
+                                        }
+                                    }}>
+                                        <Image style={styles.imageIcon} source={require("../../assets/google.png")} />
+                                    </TouchableOpacity>
+                                    <Button size="sm" margin={10} borderRadius={25} colorScheme="warning"
+                                        onPress={() => {
+                                            auth()
+                                                .signOut()
+                                                .then(() => this.props.navigation.navigate("Signin"));
+                                        }}>
+                                        Sign Out
+                                    </Button>
+                                </View>
                             </VStack>
                         </Box>
                     </Center>
@@ -171,7 +232,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: 140,
         height: 120,
-
+    },
+    imageStyle: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    imageIcon: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 30,
+        width: 30
     },
     backBird: {
         alignItems: 'center',

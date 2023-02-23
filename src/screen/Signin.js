@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import { StyleSheet, ScrollView, Image, View, Alert } from 'react-native'
+import { StyleSheet, ScrollView, Image, View, Alert,ToastAndroid } from 'react-native'
 import {
     Box, Text, Heading,
     VStack, FormControl, Input,
     Link, Button, HStack, Center,
-    NativeBaseProvider
+    NativeBaseProvider,useToast
 } from "native-base";
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import Toast from 'react-native-toast-message';
 
 export default class Signin extends Component {
     constructor(props) {
@@ -24,6 +25,7 @@ export default class Signin extends Component {
     }
 
     componentDidMount() {
+         
         if (auth().currentUser !== null) {
             this.state.userid = auth().currentUser.uid
             console.log(this.state.userid);
@@ -65,10 +67,17 @@ export default class Signin extends Component {
                     }
                 });
         } else {
-            Alert.alert("No logged out users found.", "Please Signin or Signup")
+            ToastAndroid.showWithGravityAndOffset(
+                'No logged out users found.',
+                ToastAndroid.LONG,
+                ToastAndroid.BOTTOM,
+                25,
+                50,
+              );
         }
     }
     render() {
+       
         return (
             <ScrollView>
                 <NativeBaseProvider>
@@ -113,7 +122,12 @@ export default class Signin extends Component {
                                         fontSize: "xs",
                                         fontWeight: "500",
                                         color: "#ff6060"
-                                    }} alignSelf="flex-end" mt="1">
+                                    }} alignSelf="flex-end" mt="1" onPress={ 
+                                        Toast.show({
+                                        type: 'success',
+                                        text1: 'Hello',
+                                        text2: 'This is some something 👋'
+                                      })}>
                                         Forget Password?
                                     </Link>
                                 </FormControl>
