@@ -1,7 +1,7 @@
 # AuthRollers
 
 ## Firebase Authentication with Email-Password
-      auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(() => {}
+      auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(() => {})
      
 ## Firebase Social Authentication with Google
      Role login using social Gmail account
