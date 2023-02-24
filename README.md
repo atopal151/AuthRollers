@@ -4,7 +4,12 @@
       auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(() => {})
      
 ## Firebase Social Authentication with Google
-     Role login using social Gmail account
+    async function onGoogleButtonPress() {
+      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+      const { idToken } = await GoogleSignin.signIn();
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      return auth().signInWithCredential(googleCredential);
+   }
    
 ![UI1](https://user-images.githubusercontent.com/45879059/220424891-5f5747fd-b779-4535-bb3c-37e2cbf03d4d.png)
 
