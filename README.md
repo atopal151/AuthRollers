@@ -4,6 +4,12 @@
       auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(() => {})
      
 ## Firebase Social Authentication with Google
+
+    GoogleSignin.configure({
+     webClientId: 'YOUR-WEB-CLİENT-ID',
+    });
+
+
     async function onGoogleButtonPress() {
       await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
       const { idToken } = await GoogleSignin.signIn();
