@@ -201,7 +201,7 @@ export default class Signup extends Component {
                                                     address: this.state.address,
                                                     role: this.state.selectRole
                                                 }).then(() => {
-                                                    console.log("Google data set");
+                                                    this.props.navigation.navigate("Signin")
                                                 })
                                             })
                                         }

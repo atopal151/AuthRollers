@@ -11,8 +11,6 @@ export default class StudentScreen extends Component {
   }
 
 
-
-
   render() {
     const { route } = this.props;
     const { surname, rolles, mail, userAddress } = route.params;
@@ -20,25 +18,35 @@ export default class StudentScreen extends Component {
       <NativeBaseProvider>
         <Box style={styles.container}>
           <VStack>
-            <View style={styles.container}>
+            <View style={styles.studentInfo}>
               <Image style={styles.studentStyle} source={require("../../assets/studentimage.jpg")} />
+              <Heading color='#2f3640' >
+                {surname}
+              </Heading>
+              <Heading margin={8} color='#ced6e0' size="xs">
+                {mail}
+              </Heading>
             </View>
-            <View style={styles.userInfo}>
-              <Heading style={{ color: '#130f40' }} margin={10} size="xl">
-                Welcome Student
-              </Heading>
-              <Heading margin={2} color='#30336b'>
-                Name: {surname}
-              </Heading>
-              <Heading margin={2} color='#30336b'>
-                Role: {rolles}
-              </Heading>
-              <Heading margin={2} color='#30336b'>
-                Email : {mail}
-              </Heading>
-              <Heading margin={10} color='#30336b'>
-                Address : {userAddress}
-              </Heading>
+            <View style={styles.gradView}>
+              <View style={{ elevation: 20, borderRadius: 20, margin: 20, backgroundColor: 'white', height: 80, width: '90%', alignItems: 'center', justifyContent: 'center' }}>
+                <Heading margin={2} color='#cc8e35' size="xs">
+                  Role: {
+                    <Heading margin={2} color='#aaa69d' size="xs">
+                      {rolles}
+                    </Heading>}
+                </Heading>
+              </View>
+
+            </View>
+            <View style={styles.gradView}>
+              <View style={{ elevation: 20, borderRadius: 20, margin: 20, backgroundColor: 'white', height: 80, width: '90%', alignItems: 'center', justifyContent: 'center' }}>
+                <Heading margin={2} color='#cc8e35' size="xs">
+                  Address: {<Heading margin={2} color='#aaa69d' size="xs">
+                    {userAddress}
+                  </Heading>}
+                </Heading>
+              </View>
+
             </View>
 
             <Button size="sm" margin={10} borderRadius={25} colorScheme="warning"
@@ -56,11 +64,26 @@ export default class StudentScreen extends Component {
   }
 }
 
+
+
 const styles = StyleSheet.create({
+  headBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    height: 250,
+    width: '100%',
+    backgroundColor: '#1572de',
+  },
+  gradView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+
+  },
   userInfo: {
     margin: 10,
-    elevation: 4,
-    backgroundColor: '#dff9fb',
+    elevation: 20,
+    backgroundColor: 'white',
     borderRadius: 10,
     alignItems: "center",
     justifyContent: 'center'
@@ -73,9 +96,18 @@ const styles = StyleSheet.create({
   },
 
   studentStyle: {
-    width: "50%",
+    margin: 10,
+    width: 120,
     borderRadius: 50,
-    height: "50%",
+    height: 120,
+  },
+  studentInfo: {
+    width: 310,
+    margin: 10,
+    elevation: 20,
+    backgroundColor: 'white',
+    borderRadius: 25,
+    alignItems: "center",
+    justifyContent: 'center'
   }
 })
-

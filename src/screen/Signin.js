@@ -1,14 +1,32 @@
 import React, { Component } from 'react'
-import { StyleSheet, ScrollView, Image, View, Alert,ToastAndroid } from 'react-native'
+import { StyleSheet, ScrollView, Image, View, Alert, ToastAndroid, TouchableOpacity } from 'react-native'
 import {
     Box, Text, Heading,
     VStack, FormControl, Input,
     Link, Button, HStack, Center,
-    NativeBaseProvider,useToast
+    NativeBaseProvider, useToast
 } from "native-base";
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import Toast from 'react-native-toast-message';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+
+GoogleSignin.configure({
+    webClientId: '60287710599-g1sg11gggi2qv382vc8mt3663r09orj1.apps.googleusercontent.com',
+});
+
+
+
+
+async function onGoogleButtonPress() {
+    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+    const { idToken } = await GoogleSignin.signIn();
+
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+    return auth().signInWithCredential(googleCredential);
+}
+
 
 export default class Signin extends Component {
     constructor(props) {
@@ -25,7 +43,7 @@ export default class Signin extends Component {
     }
 
     componentDidMount() {
-         
+
         if (auth().currentUser !== null) {
             this.state.userid = auth().currentUser.uid
             console.log(this.state.userid);
@@ -73,11 +91,11 @@ export default class Signin extends Component {
                 ToastAndroid.BOTTOM,
                 25,
                 50,
-              );
+            );
         }
     }
     render() {
-       
+
         return (
             <ScrollView>
                 <NativeBaseProvider>
@@ -122,12 +140,12 @@ export default class Signin extends Component {
                                         fontSize: "xs",
                                         fontWeight: "500",
                                         color: "#ff6060"
-                                    }} alignSelf="flex-end" mt="1" onPress={ 
+                                    }} alignSelf="flex-end" mt="1" onPress={
                                         Toast.show({
-                                        type: 'success',
-                                        text1: 'Hello',
-                                        text2: 'This is some something 👋'
-                                      })}>
+                                            type: 'success',
+                                            text1: 'Hello',
+                                            text2: 'This is some something 👋'
+                                        })}>
                                         Forget Password?
                                     </Link>
                                 </FormControl>
@@ -213,11 +231,69 @@ export default class Signin extends Component {
                                         Sign Up
                                     </Link>
                                 </HStack>
-                            </VStack>
-                        </Box>
-                    </Center>
-                </NativeBaseProvider>
-            </ScrollView>
+                                <View style={styles.imageStyle}>
+                                    <TouchableOpacity onPress={() => {
+                                        onGoogleButtonPress().then(() => {
+                                            console.log("Sign in");
+                                            this.state.userid = auth().currentUser.uid
+                                            console.log(this.state.userid);
+                                            firestore()
+                                                .collection('Users')
+                                                .where('uid', '==', this.state.userid)
+                                                .get()
+                                                .then(querySnapshot => {
+                                                    let user = []
+                                                    console.log(querySnapshot.size);
+                                                    querySnapshot.forEach(documentSnapshot => {
+                                                        user.push(documentSnapshot.data())
+                                                    });
+                                                    this.setState({ user })
+                                                    this.state.user.map((users) => {
+                                                        this.state.name = users.name
+                                                        this.state.role = users.role
+                                                        this.state.email = users.email
+                                                        this.state.address = users.address
+                                                        console.log(this.state.role);
+                                                    })
+
+                                                    if (this.state.role === 'teacher') {
+                                                        console.log("User Teacher");
+                                                        this.props.navigation.navigate("teacherstackscreen", {
+                                                            surname: this.state.name,
+                                                            rolles: this.state.role,
+                                                            mail: this.state.email,
+                                                            userAddress: this.state.address
+                                                        })
+                                                    } else if (this.state.role === 'student') {
+                                                        console.log("User Student");
+
+                                                        this.props.navigation.navigate("studentstackscreen", {
+                                                            surname: this.state.name,
+                                                            rolles: this.state.role,
+                                                            mail: this.state.email,
+                                                            userAddress: this.state.address
+                                                        })
+                                                    }else{
+                                                        ToastAndroid.showWithGravityAndOffset(
+                                                            'Please Sign Up',
+                                                            ToastAndroid.LONG,
+                                                            ToastAndroid.BOTTOM,
+                                                            25,
+                                                            50,
+                                                        );
+                                                    }
+                                                })
+                                        })
+                                    }}>
+                                    <Image style={styles.imageIcon} source={require("../../assets/google.png")} />
+                                </TouchableOpacity>
+
+                            </View>
+                        </VStack>
+                    </Box>
+                </Center>
+            </NativeBaseProvider>
+            </ScrollView >
         )
     }
 }
@@ -229,6 +305,16 @@ const styles = StyleSheet.create({
         width: 140,
         height: 120,
 
+    },
+    imageIcon: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 30,
+        width: 30
+    },
+    imageStyle: {
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     backBird: {
         alignItems: 'center',
