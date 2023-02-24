@@ -1,7 +1,10 @@
 # AuthRollers
 
-## Firebase Auth Email-Password
+## Firebase Authentication with Email-Password
      Routing with user role control with Firebase
+     
+## Firebase Social Authentication with Google
+     Role login using social Gmail account
    
 ![UI1](https://user-images.githubusercontent.com/45879059/220424891-5f5747fd-b779-4535-bb3c-37e2cbf03d4d.png)
 
