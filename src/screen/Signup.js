@@ -151,7 +151,22 @@ export default class Signup extends Component {
                                                     role: this.state.selectRole
                                                 })
                                                 Alert.alert("'User account created", ` Let's Signin `)
-                                                this.props.navigation.navigate('Signin')
+                                                if(this.state.selectRole==="student"){
+                                                    this.props.navigation.navigate("studentstackscreen", {
+                                                        surname: this.state.name,
+                                                        rolles: this.state.selectRole,
+                                                        mail: this.state.email,
+                                                        userAddress: this.state.address
+                                                    })
+                                                }else if(this.state.selectRole==="teacher"){
+                                                    this.props.navigation.navigate("teacherstackscreen", {
+                                                        surname: this.state.name,
+                                                        rolles: this.state.selectRole,
+                                                        mail: this.state.email,
+                                                        userAddress: this.state.address
+                                                    })
+                                                }
+                                               
                                             })
                                             .catch(error => {
                                                 if (error.code === 'auth/email-already-in-use') {
@@ -195,7 +210,21 @@ export default class Signup extends Component {
                                                     address: this.state.address,
                                                     role: this.state.selectRole
                                                 }).then(() => {
-                                                    this.props.navigation.navigate("Signin")
+                                                    if(this.state.selectRole==="student"){
+                                                        this.props.navigation.navigate("studentstackscreen", {
+                                                            surname: auth().currentUser.displayName,
+                                                            rolles: this.state.selectRole,
+                                                            mail: auth().currentUser.email,
+                                                            userAddress: this.state.address
+                                                        })
+                                                    }else if(this.state.selectRole==="teacher"){
+                                                        this.props.navigation.navigate("teacherstackscreen", {
+                                                            surname: auth().currentUser.displayName,
+                                                            rolles: this.state.selectRole,
+                                                            mail: auth().currentUser.email,
+                                                            userAddress: this.state.address
+                                                        })
+                                                    }
                                                 })
                                             })
                                         }
