@@ -1,29 +1,34 @@
 import React, { Component } from 'react'
-import { StyleSheet, ScrollView, Image, View, Alert, ToastAndroid, TouchableOpacity } from 'react-native'
+
+import {
+    StyleSheet,
+    ScrollView, Image,
+    View, Alert, ToastAndroid,
+    TouchableOpacity
+} from 'react-native'
+
 import {
     Box, Text, Heading,
     VStack, FormControl, Input,
     Link, Button, HStack, Center,
     NativeBaseProvider, useToast
 } from "native-base";
+
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import Toast from 'react-native-toast-message';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+
 
 GoogleSignin.configure({
     webClientId: '60287710599-g1sg11gggi2qv382vc8mt3663r09orj1.apps.googleusercontent.com',
 });
 
 
-
-
 async function onGoogleButtonPress() {
     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
     const { idToken } = await GoogleSignin.signIn();
-
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
     return auth().signInWithCredential(googleCredential);
 }
 
@@ -43,7 +48,6 @@ export default class Signin extends Component {
     }
 
     componentDidMount() {
-
         if (auth().currentUser !== null) {
             this.state.userid = auth().currentUser.uid
             console.log(this.state.userid);
@@ -65,7 +69,6 @@ export default class Signin extends Component {
                         this.state.address = users.address
                         console.log(this.state.role);
                     })
-
                     if (this.state.role === 'teacher') {
                         console.log("User Teacher" + this.state.name);
                         this.props.navigation.navigate("teacherstackscreen", {
@@ -95,7 +98,6 @@ export default class Signin extends Component {
         }
     }
     render() {
-
         return (
             <ScrollView>
                 <NativeBaseProvider>
@@ -112,14 +114,11 @@ export default class Signin extends Component {
                             </Heading>
                         </View>
                         <Box safeArea p="2" py="8" w="90%" maxW="290">
-
-
                             <Heading mt="1" _dark={{
                                 color: "warmGray.200"
                             }} color="coolGray.600" fontWeight="medium" size="xs">
                                 Sign in to continue!
                             </Heading>
-
                             <VStack space={3} mt="5">
                                 <FormControl>
                                     <FormControl.Label>Email Address</FormControl.Label>
@@ -135,7 +134,6 @@ export default class Signin extends Component {
                                         placeholder='write your password here'
                                         onChangeText={password => this.setState({ password })}
                                         ref={this.props.InputRef} />
-
                                     <Link _text={{
                                         fontSize: "xs",
                                         fontWeight: "500",
@@ -177,7 +175,6 @@ export default class Signin extends Component {
                                                             this.state.address = users.address
                                                             console.log(this.state.role);
                                                         })
-
                                                         if (this.state.role === 'teacher') {
                                                             console.log("User Teacher");
                                                             this.props.navigation.navigate("teacherstackscreen", {
@@ -188,7 +185,6 @@ export default class Signin extends Component {
                                                             })
                                                         } else if (this.state.role === 'student') {
                                                             console.log("User Student");
-
                                                             this.props.navigation.navigate("studentstackscreen", {
                                                                 surname: this.state.name,
                                                                 rolles: this.state.role,
@@ -197,24 +193,19 @@ export default class Signin extends Component {
                                                             })
                                                         }
                                                     });
-
-
                                             })
                                             .catch(error => {
                                                 if (error.code === 'auth/email-already-in-use') {
                                                     console.log('That email address is already in use!');
                                                 }
-
                                                 if (error.code === 'auth/invalid-email') {
                                                     console.log('That email address is invalid!');
                                                 }
-
                                                 console.error("Can't find User" + error);
                                             });
                                     }}>
                                     Sign in
                                 </Button>
-
                                 <HStack mt="6" justifyContent="center">
                                     <Text fontSize="sm" color="coolGray.600" _dark={{
                                         color: "warmGray.200"
@@ -255,7 +246,6 @@ export default class Signin extends Component {
                                                         this.state.address = users.address
                                                         console.log(this.state.role);
                                                     })
-
                                                     if (this.state.role === 'teacher') {
                                                         console.log("User Teacher");
                                                         this.props.navigation.navigate("teacherstackscreen", {
@@ -266,14 +256,13 @@ export default class Signin extends Component {
                                                         })
                                                     } else if (this.state.role === 'student') {
                                                         console.log("User Student");
-
                                                         this.props.navigation.navigate("studentstackscreen", {
                                                             surname: this.state.name,
                                                             rolles: this.state.role,
                                                             mail: this.state.email,
                                                             userAddress: this.state.address
                                                         })
-                                                    }else{
+                                                    } else {
                                                         ToastAndroid.showWithGravityAndOffset(
                                                             'Please Sign Up',
                                                             ToastAndroid.LONG,
@@ -285,14 +274,13 @@ export default class Signin extends Component {
                                                 })
                                         })
                                     }}>
-                                    <Image style={styles.imageIcon} source={require("../../assets/google.png")} />
-                                </TouchableOpacity>
-
-                            </View>
-                        </VStack>
-                    </Box>
-                </Center>
-            </NativeBaseProvider>
+                                        <Image style={styles.imageIcon} source={require("../../assets/google.png")} />
+                                    </TouchableOpacity>
+                                </View>
+                            </VStack>
+                        </Box>
+                    </Center>
+                </NativeBaseProvider>
             </ScrollView >
         )
     }
@@ -304,7 +292,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: 140,
         height: 120,
-
     },
     imageIcon: {
         alignItems: 'center',

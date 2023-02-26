@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, Image, View, Alert, TouchableOpacity,ToastAndroid } from 'react-native';
+
+import {
+    StyleSheet, ScrollView,
+    Image, View, Alert,
+    TouchableOpacity, ToastAndroid
+} from 'react-native';
+
 import {
     NativeBaseProvider, Center,
     Heading, VStack, FormControl,
     Input, Button, Box, Select, CheckIcon, WarningOutlineIcon,
-    Text, TextArea, Link, HStack, useToast
+    Text, TextArea, Link, HStack
 } from 'native-base';
+
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import Toast from 'react-native-toast-message';
 
 
 GoogleSignin.configure({
@@ -17,22 +23,15 @@ GoogleSignin.configure({
 });
 
 
-
-
 async function onGoogleButtonPress() {
     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
     const { idToken } = await GoogleSignin.signIn();
-
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
     return auth().signInWithCredential(googleCredential);
 }
 
 
-
-
 export default class Signup extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -45,9 +44,7 @@ export default class Signup extends Component {
         }
     }
 
-    
     componentDidMount() {
-         
         if (this.state.userid !== '') {
             this.state.userid = auth().currentUser.uid
             console.log(this.state.userid);
@@ -57,14 +54,11 @@ export default class Signup extends Component {
                 ToastAndroid.BOTTOM,
                 25,
                 50,
-              );
-           //Alert.alert("There is a logged in user", ` UID : ${this.state.userid} `)
+            );
         } else {
-
         }
     }
     render() {
-
         return (
             <ScrollView>
                 <NativeBaseProvider>

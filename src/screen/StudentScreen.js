@@ -10,7 +10,6 @@ export default class StudentScreen extends Component {
     this.state = {};
   }
 
-
   render() {
     const { route } = this.props;
     const { surname, rolles, mail, userAddress } = route.params;
@@ -36,7 +35,6 @@ export default class StudentScreen extends Component {
                     </Heading>}
                 </Heading>
               </View>
-
             </View>
             <View style={styles.gradView}>
               <View style={{ elevation: 20, borderRadius: 20, margin: 20, backgroundColor: 'white', height: 80, width: '90%', alignItems: 'center', justifyContent: 'center' }}>
@@ -46,9 +44,7 @@ export default class StudentScreen extends Component {
                   </Heading>}
                 </Heading>
               </View>
-
             </View>
-
             <Button size="sm" margin={10} borderRadius={25} colorScheme="warning"
               onPress={() => {
                 auth()
@@ -64,8 +60,6 @@ export default class StudentScreen extends Component {
   }
 }
 
-
-
 const styles = StyleSheet.create({
   headBackground: {
     position: 'absolute',
@@ -78,7 +72,6 @@ const styles = StyleSheet.create({
   gradView: {
     alignItems: 'center',
     justifyContent: 'center',
-
   },
   userInfo: {
     margin: 10,
@@ -90,11 +83,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "white",
     alignItems: 'center',
     justifyContent: 'center'
   },
-
   studentStyle: {
     margin: 10,
     width: 120,

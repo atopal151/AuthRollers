@@ -5,7 +5,7 @@ export default class DrawerMenu extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text> Menu </Text>
+        <Text> Welcome </Text>
       </View>
     )
   }

@@ -37,7 +37,6 @@ function TeacherStackScreen() {
 
 const Drawer = createDrawerNavigator();
 
-
 export default class Router extends Component {
     render() {
         return (
